@@ -1,0 +1,10 @@
+(define (fringe x)
+  (cond ((pair? x) (append (fringe  (car x)) (fringe (cdr x))))
+        ((null? x) ())
+        (else (list x)))
+  )
+
+(define x  (list (list 1 2)  (list 3 4)))
+(display (fringe  x))
+(newline)
+(display  (fringe (list x x)))

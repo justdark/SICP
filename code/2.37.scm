@@ -1,0 +1,46 @@
+(define (accumulate op initial sequence)
+  (if (null? sequence)
+      initial
+      (op (car sequence)
+          (accumulate op initial (cdr sequence)))))
+
+(define (filter-first seq)
+    (if (null? seq)
+        ()
+        (cons (car (car seq)) (filter-first (cdr seq)))))
+
+(define (filter-first-out seq)
+    (if (null? seq)
+        ()
+        (cons (cdr (car seq))  (filter-first-out (cdr seq)))))
+
+
+(define (accumulate-n op init seqs)
+  (if (null? (car seqs))
+      ()
+      (cons (accumulate op init (filter-first  seqs))
+            (accumulate-n op init (filter-first-out seqs)))))
+
+;;;;;;;;;;;;;;;;;;2.38 content ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define (dot-product v w)
+  (accumulate + 0 (map * v w)))
+(define (matrix-*-vector  m v)
+  (map (lambda (mv) (accumulate + 0 (map * mv v)))  m))
+(define (transpose mat)
+  (accumulate-n cons () mat))
+(define (matrix-*-matrix  m n)
+  (let ((cols  (transpose n)))
+    (map (lambda (mv) (matrix-*-vector  cols mv)) m)))
+
+(define mat1 (list (list 1 2 3) 
+                    (list 4 5 6) 
+                    (list 7 8 9) 
+                    (list 10 11 12)))
+(define mat2 (list (list 1 0 0) 
+                   (list 0 1 0) 
+                   (list 0 0 1) 
+                   ))
+(define v1  (list 1 1 1))
+(display (matrix-*-vector mat1 v1))(newline)
+(display (matrix-*-matrix mat1 mat2))(newline)
+(display (transpose  mat1))
