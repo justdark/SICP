@@ -34,9 +34,6 @@
          ((=number? a2  0)  a1)
          ((and (number? a1) (number?  a2)) (- a1 a2))
          (else (list '- a1 a2))))
-(define (addend s) (cadr s))
-
-(define (augend s) (caddr s))
 
 
 (define (product? x)
