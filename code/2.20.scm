@@ -1,0 +1,10 @@
+(define (same-parity a . z)
+  (define (iter s r)
+    (if (null? s)
+        '()
+        (if (= r (remainder (car s) 2))
+            (cons (car s) (iter (cdr s) r))
+            (iter (cdr s) r))))
+  (iter (cons a z) (remainder a 2)))
+
+(display (same-parity 1 2 3 4 5 6 7))
